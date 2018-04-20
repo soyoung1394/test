@@ -8,6 +8,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import java.sql.SQLException;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
@@ -44,5 +45,37 @@ public class ProductDaoTest {
         assertThat(insertProduct.getId(),is(id));
         assertThat(insertProduct.getTitle(),is(product.getTitle()));
         assertThat(insertProduct.getPrice(),is(product.getPrice()));
+    }
+    @Test
+    public void update() throws SQLException, ClassNotFoundException {
+        Product product=new Product();
+        product.setTitle("b");
+        product.setPrice(100);
+        Long id=productDao.insert(product);
+
+        product.setId(id);
+        product.setTitle("c");
+        product.setPrice(100);
+        productDao.update(product);
+
+        Product updateProduct=productDao.get(id);
+        assertThat(updateProduct.getId(),is(id));
+        assertThat(updateProduct.getTitle(),is(product.getTitle()));
+        assertThat(updateProduct.getPrice(),is(product.getPrice()));
+
+    }
+
+    @Test
+    public void delete() throws SQLException, ClassNotFoundException {
+        Product product=new Product();
+        product.setTitle("b");
+        product.setPrice(100);
+        Long id=productDao.insert(product);
+
+        productDao.delete(id);
+        Product deleteProduct=productDao.get(id);
+        assertThat(deleteProduct, nullValue());
+
+
     }
 }
