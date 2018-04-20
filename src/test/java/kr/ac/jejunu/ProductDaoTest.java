@@ -5,16 +5,16 @@ import org.junit.Test;
 
 import java.sql.SQLException;
 
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 public class ProductDaoTest {
     ProductDao productDao;
+
     @Before
     public void setup() {
-        productDao=new JejuProductDao();
+        productDao= new ProductDao();
     }
 
     @Test
